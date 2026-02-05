@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Thiết Kế Đồ Họa | Lê Ngọc Hải - FPT Polytechnic</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        orange: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                        },
+                        slate: {
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .project-card.hidden {
+            display: none;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Modal Animation */
+        #project-modal.active {
+            display: flex;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #modal-container {
+            transform: scale(0.95);
+            transition: transform 0.3s ease-out;
+        }
+        #project-modal.active #modal-container {
+            transform: scale(1);
+        }
+
+        /* Custom scrollbar */
+        #modal-content-area::-webkit-scrollbar {
+            width: 4px;
+        }
+        #modal-content-area::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 selection:bg-orange-500/30 overflow-x-hidden">
+
+    <!-- Thanh Điều Hướng -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-4 md:py-6">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html">
+                <div class="flex items-center gap-3">
+                    <div class="w-16 h-9 md:w-20 md:h-11 bg-gradient-to-br from-orange-500 to-orange-700 rounded-lg md:rounded-xl flex items-center justify-center text-white font-black text-base md:text-xl shadow-lg shadow-orange-900/20 uppercase">LEHAI</div>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center gap-10 font-semibold uppercase text-xs tracking-widest text-slate-400">
+                <a href="#about" class="hover:text-orange-500 transition-colors">Giới thiệu</a>
+                <a href="#skills" class="hover:text-orange-500 transition-colors">Kỹ năng</a>
+                <a href="#projects" class="hover:text-orange-500 transition-colors">Dự án</a>
+                <a href="#contact" class="hover:text-orange-500 transition-colors">Liên hệ</a>
+            </div>
+
+            <button id="menu-btn" class="md:hidden text-white p-2 focus:outline-none">
+                <i data-lucide="menu" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-slate-800 absolute w-full py-8 flex flex-col items-center gap-6 shadow-2xl">
+            <a href="#about" class="text-lg font-bold mobile-link">Giới thiệu</a>
+            <a href="#skills" class="text-lg font-bold mobile-link">Kỹ năng</a>
+            <a href="#projects" class="text-lg font-bold mobile-link">Dự án</a>
+            <a href="#contact" class="text-lg font-bold mobile-link">Liên hệ</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-16 md:pt-56 md:pb-40 overflow-hidden">
+        <div class="absolute top-0 right-0 w-2/3 h-full bg-orange-600/5 -z-10 rounded-bl-[200px] blur-[120px]"></div>
+        <div class="absolute -top-40 -left-40 w-80 h-80 bg-slate-800/30 rounded-full blur-[100px] -z-10"></div>
+        
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center gap-12 md:gap-16">
+            <div class="md:w-3/5 text-center md:text-left order-2 md:order-1">
+                <div class="inline-flex items-center gap-2 px-4 py-2 mb-6 md:mb-8 bg-orange-600/10 border border-orange-600/20 rounded-full text-orange-500 text-[10px] md:text-xs font-black uppercase tracking-widest">
+                    <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+                    Graphic Designer @ FPT Polytechnic
+                </div>
+                <h1 class="text-3xl md:text-7xl font-black text-white mb-6 md:mb-8 leading-[1.2] md:leading-[1.1] tracking-tighter">
+                    Nâng tầm <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">ý tưởng</span>,<br class="hidden md:block">
+                    kiến tạo giá trị
+                </h1>
+                <p class="text-base md:text-xl text-slate-400 mb-8 md:mb-10 max-w-2xl leading-relaxed font-medium">
+                    Em là sinh viên chuyên ngành Thiết kế đồ họa tại FPT Polytechnic. Với đam mê sáng tạo và khả năng biến hóa ý tưởng thành những sản phẩm thị giác độc đáo.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#projects" class="px-8 py-4 md:px-10 md:py-5 bg-orange-600 text-white rounded-xl md:rounded-2xl font-black flex items-center justify-center gap-3 hover:bg-orange-500 transition-all shadow-xl shadow-orange-900/40 hover:-translate-y-1 active:translate-y-0 uppercase tracking-wider text-xs md:text-sm">
+                        Khám phá tác phẩm <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="w-full max-w-[280px] md:max-w-none md:w-2/5 relative order-1 md:order-2">
+                <div class="absolute inset-0 bg-gradient-to-br from-orange-500 to-orange-800 rounded-[2.5rem] md:rounded-[3rem] rotate-6 -z-10 blur-2xl opacity-20"></div>
+                <div class="aspect-[4/5] bg-slate-800 rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border-[8px] md:border-[12px] border-slate-900 shadow-2xl relative group">
+                    <img 
+                        src="hai.jpg" 
+                        alt="Lê Ngọc Hải" 
+                        class="w-full h-full object-cover transition-all duration-1000 scale-105 group-hover:scale-100"
+                        onerror="this.src='https://via.placeholder.com/400x500?text=Le+Ngoc+Hai'"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-40 group-hover:opacity-20 transition-opacity"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 md:py-32 bg-slate-900/50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mb-12 md:mb-20 text-center md:text-left">
+                <h2 class="text-3xl md:text-5xl font-black mb-4 md:mb-6 text-white tracking-tight">Kỹ Năng Thực Chiến</h2>
+                <div class="h-1.5 w-16 bg-orange-600 rounded-full mb-6 md:mb-8 mx-auto md:ml-0"></div>
+                <p class="text-slate-400 text-base md:text-lg">Sử dụng thành thạo các công cụ thiết kế hàng đầu để biến ý tưởng thành hiện thực.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
+                <div class="p-8 md:p-10 bg-slate-950 border border-slate-800 rounded-[2rem] md:rounded-[2.5rem] hover:border-orange-600/50 transition-all group">
+                    <div class="w-12 h-14 md:w-14 md:h-16 bg-slate-900 border border-slate-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all duration-500">
+                        <i data-lucide="palette" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-white">Thương hiệu & Logo</h3>
+                    <ul class="space-y-3 md:space-y-4 text-slate-400 text-sm md:text-base font-medium">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Adobe Illustrator</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Brand Guidelines</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Typography</li>
+                    </ul>
+                </div>
+                <div class="p-8 md:p-10 bg-slate-950 border border-slate-800 rounded-[2rem] md:rounded-[2.5rem] hover:border-orange-600/50 transition-all group">
+                    <div class="w-12 h-14 md:w-14 md:h-16 bg-slate-900 border border-slate-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all duration-500">
+                        <i data-lucide="layout" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-white">Tạp chí, Catalouge</h3>
+                    <ul class="space-y-3 md:space-y-4 text-slate-400 text-sm md:text-base font-medium">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Adobe Indesign</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Adobe Photoshop</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Adobe Ilustrator</li>
+                    </ul>
+                </div>
+                <div class="p-8 md:p-10 bg-slate-950 border border-slate-800 rounded-[2rem] md:rounded-[2.5rem] hover:border-orange-600/50 transition-all group">
+                    <div class="w-12 h-14 md:w-14 md:h-16 bg-slate-900 border border-slate-800 rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 text-orange-500 group-hover:bg-orange-600 group-hover:text-white transition-all duration-500">
+                        <i data-lucide="image" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-white">Digital Art</h3>
+                    <ul class="space-y-3 md:space-y-4 text-slate-400 text-sm md:text-base font-medium">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Adobe Photoshop</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> Photo Manipulation</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 bg-orange-600 rounded-full"></span> 2D Illustration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Gallery -->
+    <section id="projects" class="py-20 md:py-32">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row justify-between items-center lg:items-end mb-12 md:mb-20 gap-8">
+                <div class="text-center lg:text-left">
+                    <h2 class="text-3xl md:text-5xl font-black mb-4 md:mb-6 text-white tracking-tight">Dự Án Tiêu Biểu</h2>
+                    <p class="text-slate-400 text-base md:text-lg">Những sản phẩm đúc kết từ quá trình rèn luyện.</p>
+                </div>
+                <div class="flex flex-wrap justify-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+                    <button onclick="filterProjects('all')" class="filter-btn px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-bold text-[10px] md:text-sm transition-all uppercase tracking-wider bg-orange-600 text-white" data-category="all">Tất cả</button>
+                    <button onclick="filterProjects('branding')" class="filter-btn px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-bold text-[10px] md:text-sm transition-all uppercase tracking-wider text-slate-400" data-category="branding">Branding</button>
+                    <button onclick="filterProjects('digital')" class="filter-btn px-4 py-2 md:px-6 md:py-2.5 rounded-lg font-bold text-[10px] md:text-sm transition-all uppercase tracking-wider text-slate-400" data-category="digital">Digital Art</button>
+                </div>
+            </div>
+
+            <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+                <!-- Dự án Gốm Vân -->
+                <div class="project-card group bg-slate-900 border border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden hover:border-orange-600/30 transition-all duration-500 shadow-xl" data-category="branding">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <img src="Dự án Gốm vân/z7502738923230_c5db3744036133f1112cf8fe82ac583f.jpg" alt="Dự án Gốm Vân" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
+                            <button onclick="openModal('gom-van')" class="bg-white text-slate-950 px-5 py-2.5 rounded-lg font-black uppercase text-[10px]">
+                                Xem chi tiết
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-8 md:p-10">
+                        <div class="text-[9px] font-black text-orange-500 uppercase mb-3 tracking-[0.3em]">branding</div>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-white group-hover:text-orange-500 transition-colors">Thương Hiệu Gốm Vân</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">Bộ nhận diện "Hồn Đất Việt" tôn vinh giá trị văn hóa gốm truyền thống.</p>
+                    </div>
+                </div>
+
+                <!-- Dự án Mộc Mầm -->
+                <div class="project-card group bg-slate-900 border border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden hover:border-orange-600/30 transition-all duration-500 shadow-xl" data-category="branding">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <img src="Dự án Mộc Mầm/z7504830393703_da13720c0a1b09ddfb182d84dc5cbaaa.jpg" alt="Thương hiệu Mộc Mầm" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
+                            <button onclick="openModal('moc-mam')" class="bg-white text-slate-950 px-5 py-2.5 rounded-lg font-black uppercase text-[10px]">
+                                Xem chi tiết
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-8 md:p-10">
+                        <div class="text-[9px] font-black text-orange-500 uppercase mb-3 tracking-[0.3em]">branding</div>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-white group-hover:text-orange-500 transition-colors">Thương Hiệu Mộc Mầm</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">Thiết kế bộ ấn phẩm truyền thông cho thương hiệu đồ chơi gỗ trẻ em.</p>
+                    </div>
+                </div>
+
+                <!-- Dự án Ngôi Nhà Âm Nhạc -->
+                <div class="project-card group bg-slate-900 border border-slate-800 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden hover:border-orange-600/30 transition-all duration-500 shadow-xl" data-category="digital">
+                    <div class="aspect-[4/3] overflow-hidden relative">
+                        <img src="Dự án Ngôi nhà âm nhạc/z7505145262780_6c6344089083c812dce98d68b265a35e.jpg" alt="Ngôi Nhà Âm Nhạc" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm">
+                            <button onclick="openModal('music-house')" class="bg-white text-slate-950 px-5 py-2.5 rounded-lg font-black uppercase text-[10px]">
+                                Xem chi tiết
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-8 md:p-10">
+                        <div class="text-[9px] font-black text-orange-500 uppercase mb-3 tracking-[0.3em]">digital</div>
+                        <h3 class="text-xl md:text-2xl font-bold mb-4 text-white group-hover:text-orange-500 transition-colors">Manipulation: Ngôi Nhà Âm Nhạc</h3>
+                        <p class="text-slate-400 text-sm line-clamp-2">Tác phẩm Digital Art sáng tạo kết hợp không gian sống và nhạc cụ.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Dự Án (Đã tối ưu Mobile) -->
+    <div id="project-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-2 md:p-4">
+        <div class="absolute inset-0 bg-slate-950/95 backdrop-blur-md" onclick="closeModal()"></div>
+        
+        <div id="modal-container" class="relative bg-slate-900 border border-slate-800 w-full max-w-4xl max-h-[95vh] md:max-h-[90vh] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl flex flex-col">
+            <button onclick="closeModal()" class="absolute top-3 right-3 z-[110] bg-slate-800/80 hover:bg-orange-600 text-white p-2 rounded-full transition-all backdrop-blur-md">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div id="modal-content-area" class="overflow-y-auto p-4 md:p-8">
+                <!-- Image Showcase -->
+                <div class="relative w-full aspect-[4/3] md:aspect-[16/9] mb-6 md:mb-8 group">
+                    <button onclick="prevImage()" class="absolute left-2 top-1/2 -translate-y-1/2 z-[110] bg-slate-900/60 text-white p-2 rounded-lg md:rounded-xl backdrop-blur-md transition-all">
+                        <i data-lucide="chevron-left" class="w-4 h-4 md:w-5 md:h-5"></i>
+                    </button>
+                    <button onclick="nextImage()" class="absolute right-2 top-1/2 -translate-y-1/2 z-[110] bg-slate-900/60 text-white p-2 rounded-lg md:rounded-xl backdrop-blur-md transition-all">
+                        <i data-lucide="chevron-right" class="w-4 h-4 md:w-5 md:h-5"></i>
+                    </button>
+
+                    <div class="w-full h-full rounded-xl overflow-hidden bg-slate-950 border border-white/5">
+                        <img id="modal-image" src="" class="w-full h-full object-contain" alt="Dự án">
+                    </div>
+
+                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-slate-950/80 backdrop-blur-md rounded-full text-[8px] font-black tracking-widest text-white uppercase">
+                        <span id="img-current">1</span> / <span id="img-total">3</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row justify-between items-start gap-6">
+                    <div class="flex-1">
+                        <div id="modal-category" class="text-[8px] md:text-[9px] font-black text-orange-500 uppercase mb-2 tracking-[0.4em]">Danh mục</div>
+                        <h2 id="modal-title" class="text-xl md:text-3xl font-black text-white mb-3 md:mb-4 tracking-tighter leading-tight">Tiêu đề</h2>
+                        <p id="modal-desc" class="text-slate-400 text-sm md:text-base leading-relaxed">Mô tả dự án...</p>
+                    </div>
+                    <div class="w-full md:w-56 pt-2 border-t border-slate-800 md:border-t-0">
+                         <div class="flex items-center gap-3 md:border-l-2 md:border-orange-600 md:pl-4">
+                            <div class="text-xs">
+                                <span class="text-slate-500 font-bold block mb-1 uppercase tracking-widest text-[9px]">Thiết kế bởi</span>
+                                <span id="modal-author" class="text-white font-black text-xs md:text-sm">Nhóm và Lê Ngọc Hải</span>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About/Education Section -->
+    <section id="about" class="py-20 md:py-32 bg-slate-900/30">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-16 md:gap-24">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-black mb-12 text-white tracking-tight text-center md:text-left">Hành Trình Học Tập</h2>
+                    <div class="space-y-10 md:space-y-12 relative before:absolute before:left-0 before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-800 pl-8 md:pl-10">
+                        <div class="relative group">
+                            <div class="absolute -left-[37px] md:-left-[45px] top-1 w-4 h-4 md:w-6 md:h-6 rounded-full bg-slate-950 border-[4px] md:border-[6px] border-orange-600"></div>
+                            <h4 class="text-[10px] font-black text-orange-500 mb-2 uppercase tracking-widest">SPRING 2026 - NAY</h4>
+                            <h3 class="text-xl md:text-2xl font-bold mb-3 text-white">Cao Đẳng FPT Polytechnic</h3>
+                            <p class="text-sm md:text-base font-semibold text-slate-300 mb-3">Chuyên ngành Thiết kế đồ họa</p>
+                            <p class="text-slate-500 text-sm leading-relaxed italic">"Rèn luyện tư duy thiết kế thực tế và bộ công cụ Adobe chuyên nghiệp."</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="p-8 md:p-12 bg-slate-900 border border-slate-800 rounded-[2rem] md:rounded-[3rem] shadow-2xl relative overflow-hidden">
+                        <h3 class="text-2xl md:text-3xl font-black mb-6 md:mb-8 text-white">Định hướng</h3>
+                        <div class="space-y-6">
+                            <div class="flex gap-4 md:gap-6 items-start">
+                                <div class="p-3 md:p-4 bg-orange-600 text-white rounded-xl md:rounded-2xl shrink-0">
+                                    <i data-lucide="award" class="w-5 h-5 md:w-6 md:h-6"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg md:text-xl text-white">Agency</h4>
+                                    <p class="text-slate-400 text-sm md:text-base">Sẵn sàng cống hiến tại các môi trường sáng tạo chuyên nghiệp.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 md:py-32">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto bg-slate-900 border border-slate-800 rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden shadow-2xl flex flex-col md:flex-row">
+                <div class="p-10 md:p-16 md:w-5/12 bg-gradient-to-br from-orange-600 to-orange-700">
+                    <h2 class="text-3xl md:text-4xl font-black mb-6 text-white leading-tight">Liên hệ ngay?</h2>
+                    <p class="text-orange-100 mb-10 text-base md:text-lg opacity-90">Gửi tin nhắn để cùng thảo luận về các dự án mới.</p>
+                    <div class="space-y-6 md:space-y-10">
+                        <div class="flex items-center gap-4 md:gap-6">
+                            <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl bg-white/10 flex items-center justify-center">
+                                <i data-lucide="mail" class="w-5 h-5 md:w-6 md:h-6"></i>
+                            </div>
+                            <span class="font-bold text-sm md:text-lg">lehai8254@gmail.com</span>
+                        </div>
+                        <div class="flex items-center gap-4 md:gap-6">
+                            <div class="w-10 h-10 md:w-14 md:h-14 rounded-xl bg-white/10 flex items-center justify-center">
+                                <i data-lucide="smartphone" class="w-5 h-5 md:w-6 md:h-6"></i>
+                            </div>
+                            <span class="font-bold text-sm md:text-lg">0345 085 612</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-8 md:p-16 md:w-7/12 bg-slate-900">
+                    <form class="space-y-6 md:space-y-8" onsubmit="event.preventDefault()">
+                        <div class="grid grid-cols-1 gap-6 md:gap-8">
+                            <div class="space-y-2">
+                                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Họ và tên</label>
+                                <input type="text" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:px-6 md:py-4 focus:ring-2 focus:ring-orange-600 transition-all text-white text-sm" placeholder="Tên của bạn">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Lời nhắn</label>
+                            <textarea rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 md:px-6 md:py-4 focus:ring-2 focus:ring-orange-600 transition-all text-white text-sm resize-none" placeholder="Ý tưởng của bạn..."></textarea>
+                        </div>
+                        <button class="w-full py-4 md:py-6 bg-orange-600 text-white font-black rounded-xl md:rounded-[1.5rem] uppercase tracking-widest text-xs md:text-sm">
+                            Gửi yêu cầu <i data-lucide="send" class="inline w-4 h-4 ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 md:py-20 bg-slate-950 text-slate-600 text-center border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <p class="mb-2 text-slate-400 font-bold text-base md:text-lg">© 2024 — Lê Ngọc Hải</p>
+            <p class="text-[8px] md:text-[10px] tracking-[0.4em] uppercase font-black text-slate-700">FPT Polytechnic • Graphic Design</p>
+        </div>
+    </footer>
+
+    <script>
+        const projectsData = {
+            'gom-van': {
+                title: 'Thương Hiệu Gốm Vân',
+                category: 'branding',
+                author: 'Nhóm và Lê Ngọc Hải',
+                desc: 'Dự án "Hồn Đất Việt" với mục tiêu bảo tồn và phát huy giá trị gốm cổ Thanh Hóa.',
+                images: [
+                    'Dự án Gốm vân/z7502738923230_c5db3744036133f1112cf8fe82ac583f.jpg',
+                    'Dự án Gốm vân/z7502738390474_40a892f942d1d9aba45fb312a30ba2a3.jpg',
+                    'Dự án Gốm vân/z7502739064955_9323d5d110a0917247d755b828c5a801.jpg'
+                ]
+            },
+            'moc-mam': {
+                title: 'Thương Hiệu Mộc Mầm',
+                category: 'branding',
+                author: 'Nhóm và Lê Ngọc Hải',
+                desc: 'Mộc Mầm là thương hiệu đồ chơi gỗ cao cấp dành cho trẻ em.',
+                images: [
+                    'Dự án Mộc Mầm/z7504830393703_da13720c0a1b09ddfb182d84dc5cbaaa.jpg',
+                    'Dự án Mộc Mầm/z7504830393645_1b45467bc2dea949bcbe64fde25ccde0.jpg',
+                    'Dự án Mộc Mầm/z7504830393659_6cf8305e0626966808870d24c1b71825.jpg'
+                ]
+            },
+            'music-house': {
+                title: 'Manipulation: Ngôi Nhà Âm Nhạc',
+                category: 'digital art',
+                author: 'Nhóm và Lê Ngọc Hải',
+                desc: 'Tác phẩm manipulation kết hợp sự ấm cúng của ngôi nhà bên trong thân chiếc đàn gỗ.',
+                images: [
+                    'Dự án Ngôi nhà âm nhạc/z7505145262780_6c6344089083c812dce98d68b265a35e.jpg',
+                    'Dự án Ngôi nhà âm nhạc/z7505146989629_155c0d2c48b71f952d96bad5ee38b4fa.jpg'
+                ]
+            }
+        };
+
+        let activeProject = null;
+        let activeImgIndex = 0;
+
+        lucide.createIcons();
+
+        const modal = document.getElementById('project-modal');
+        const modalImg = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalCat = document.getElementById('modal-category');
+        const modalAuthor = document.getElementById('modal-author');
+        const imgCurrent = document.getElementById('img-current');
+        const imgTotal = document.getElementById('img-total');
+
+        function openModal(id) {
+            activeProject = projectsData[id];
+            activeImgIndex = 0;
+            updateModalUI();
+            modal.classList.add('active');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            setTimeout(() => { modal.classList.add('hidden'); }, 300);
+            document.body.style.overflow = ''; 
+        }
+
+        function updateModalUI() {
+            if(!activeProject) return;
+            modalImg.src = activeProject.images[activeImgIndex];
+            modalTitle.innerText = activeProject.title;
+            modalDesc.innerText = activeProject.desc;
+            modalCat.innerText = activeProject.category;
+            modalAuthor.innerText = activeProject.author;
+            imgCurrent.innerText = activeImgIndex + 1;
+            imgTotal.innerText = activeProject.images.length;
+        }
+
+        function nextImage() {
+            if (!activeProject) return;
+            activeImgIndex = (activeImgIndex + 1) % activeProject.images.length;
+            updateModalUI();
+        }
+
+        function prevImage() {
+            if (!activeProject) return;
+            activeImgIndex = (activeImgIndex - 1 + activeProject.images.length) % activeProject.images.length;
+            updateModalUI();
+        }
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-slate-950/90', 'backdrop-blur-xl', 'py-3');
+                navbar.classList.remove('py-4', 'md:py-6');
+            } else {
+                navbar.classList.remove('bg-slate-950/90', 'backdrop-blur-xl', 'py-3');
+                navbar.classList.add('py-4', 'md:py-6');
+            }
+        });
+
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
+        });
+
+        function filterProjects(category) {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('bg-orange-600', 'text-white');
+                    btn.classList.remove('text-slate-400');
+                } else {
+                    btn.classList.remove('bg-orange-600', 'text-white');
+                    btn.classList.add('text-slate-400');
+                }
+            });
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.classList.remove('hidden');
+                    card.classList.add('animate-fade-in');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
